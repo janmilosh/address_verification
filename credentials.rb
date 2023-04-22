@@ -3,3 +3,4 @@
 
 AUTH_ID = ''
 AUTH_TOKEN = ''
+LICENSE = ''
