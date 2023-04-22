@@ -1,14 +1,13 @@
 require 'csv'
 
 class CSVParser
-  attr_reader :file, :table
+  attr_reader :file
 
   def initialize(file)
     @file = file
-    @table = csv_table
   end
 
-  def csv_table
+  def table
     t = CSV.parse(File.read(@file),
               headers: true,
               header_converters: :symbol,

@@ -1,16 +1,31 @@
-require_relative '../../credentials.rb'
-require 'smartystreets_ruby_sdk/static_credentials'
+require 'smartystreets_ruby_sdk/batch'
+require 'smartystreets_ruby_sdk/us_street/lookup'
+require 'smartystreets_ruby_sdk/us_street/match_type'
 
 class SmartyHelper
-  attr_reader :street, :city, :zip
+  attr_reader :data, :num_candidates
 
-  def initialize(street, city, zip)
-    @street = street
-    @city = city
-    @zip = zip
+  def initialize(parsed_data, num_candidates=1)
+    @data = parsed_data
+    @num_candidates = num_candidates
   end
 
-  def credentials
-    SmartyStreets::StaticCredentials.new(AUTH_ID, AUTH_TOKEN)
+  def batch
+    batched_data = SmartyStreets::Batch.new
+    @data.each_with_index do |address, i|
+      batched_data.add(SmartyStreets::USStreet::Lookup.new)
+      batched_data[i].street = address[:street]
+      batched_data[i].city = address[:city]
+      batched_data[i].zipcode = address[:zip_code]
+      batched_data[i].candidates = @num_candidates
+      batched_data[i].match = match
+    end
+    batched_data
+  end
+
+  private
+
+  def match
+    SmartyStreets::USStreet::MatchType::STRICT
   end
 end
