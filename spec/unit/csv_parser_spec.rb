@@ -3,7 +3,7 @@ require_relative '../../app/lib/csv_parser.rb'
 describe CSVParser do
   subject { CSVParser.new(file) }  
   let(:table) { subject.table }
-  let(:file) { "#{ __dir__ }/../test_data/test_2_line.csv" }
+  let(:file) { "#{ __dir__ }/../../app/data/test_2_line.csv" }
 
   describe '#initialize' do
     it 'creates a CSV::Table instance' do
@@ -26,7 +26,7 @@ describe CSVParser do
     end
 
     describe 'unclean file with blank and empty lines' do
-      let(:file) { "#{ __dir__ }/../test_data/test_no_data_lines.csv" }
+      let(:file) { "#{ __dir__ }/../../app/data/test_no_data_lines.csv" }
 
       it 'should skip lines with no data' do
         expect(table.size).to eq 2

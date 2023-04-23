@@ -2,7 +2,7 @@ require_relative '../../app/lib/smarty_helper.rb'
 require_relative '../../app/lib/csv_parser.rb'
 
 describe SmartyHelper do
-  let(:file) { "#{ __dir__ }/../test_data/test_2_line.csv" }
+  let(:file) { "#{ __dir__ }/../../app/data/test_2_line.csv" }
   let(:data) { CSVParser.new(file).table }
   let(:num_candidates) { 5 }
   subject { SmartyHelper.new(data, num_candidates) }

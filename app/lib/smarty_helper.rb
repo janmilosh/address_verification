@@ -3,8 +3,6 @@ require 'smartystreets_ruby_sdk/us_street/lookup'
 require 'smartystreets_ruby_sdk/us_street/match_type'
 
 class SmartyHelper
-  attr_reader :data, :num_candidates
-
   def initialize(parsed_data, num_candidates=1)
     @data = parsed_data
     @num_candidates = num_candidates

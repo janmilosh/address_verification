@@ -3,8 +3,6 @@ require 'smartystreets_ruby_sdk/static_credentials'
 require 'smartystreets_ruby_sdk/client_builder'
 
 class SmartyService
-  attr_accessor :batch
-
   def initialize(batch)
     @batch = batch
   end
