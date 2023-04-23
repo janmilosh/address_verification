@@ -2,13 +2,13 @@ require_relative '../../app/lib/smarty_helper.rb'
 require_relative '../../app/lib/csv_parser.rb'
 
 describe SmartyHelper do
-  let(:file)           { "#{ __dir__ }/../test_data/test_2_line.csv" }
-  let(:data)           { CSVParser.new(file).table }
+  let(:file) { "#{ __dir__ }/../test_data/test_2_line.csv" }
+  let(:data) { CSVParser.new(file).table }
   let(:num_candidates) { 5 }
-  subject              { SmartyHelper.new(data, num_candidates) }
-  
+  subject { SmartyHelper.new(data, num_candidates) }
+
   describe '#initialize' do
-    it 'receives CSV data' do
+    it 'creates a CSV::Table instance' do
       expect(data).to be_an_instance_of(CSV::Table)
     end
 
