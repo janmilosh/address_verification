@@ -33,3 +33,21 @@ bundle exec rspec ./spec/functional -fd
 ```
 $ ruby verify.rb addresses.csv
 ```
+This will output:
+```
+143 e Maine Street, Columbus, 43215 -> 143 E Main St, Columbus, 43215-5370
+1 Empora St, Title, 11111 -> Invalid Address
+```
+
+## Project structure
+
+The clean architecture principle was used as a basis for organizing this project. (See video below for details.)
+
+The project was divided into processes with values at the boundaries. The api service call is made from a procedure that calls to the various processes which prepare data for the api and format the result. This allows decoupling of the IO. The processes can be easily unit tested and the IO can be exercised by a functional test.
+
+![image](images/diagram.png)
+
+The SmartyStreets Ruby SDK gem is used for making the api call. The SimpleCov gem is used for code coverage analysis.
+
+## Clean Architecture video
+<a href="https://youtu.be/DJtef410XaM"><img src="images/the_clean_architecture.png"  width="500" alt="The Clean Architecture in Python"></a>

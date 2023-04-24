@@ -8,10 +8,6 @@ describe SmartyHelper do
   subject { SmartyHelper.new(data, num_candidates) }
 
   describe '#initialize' do
-    it 'creates a CSV::Table instance' do
-      expect(data).to be_an_instance_of(CSV::Table)
-    end
-
     it 'creates a SmartyHelper instance' do
       expect(subject).to be_an_instance_of(SmartyHelper)
     end
