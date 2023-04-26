@@ -2,49 +2,51 @@ class ResultsFormatter
   def initialize(csv_data, results)
     @data = csv_data
     @results = results
-    @output_strings = []
-    @input_strings = []
-    @valid_inputs = valid_inputs
+    @clean_results = clean_results
   end
 
   def formatted_inputs_results
-    parse_inputs_results
     inputs_results = []
-    @data.each_with_index do |d, index|
-      inputs_results << @input_strings[index] + @output_strings[index]
+    @data.each_with_index do |input, input_index|
+      if !@clean_results.has_key?(input_index)
+        inputs_results << add_formatted_output(input, 'invalid')
+      else
+        @clean_results[input_index].each_with_index do |result_str, candidate_index|
+          inputs_results << add_formatted_output(input, candidate_index, result_str)
+        end
+      end
     end
     inputs_results
   end
   
   private
 
-  def parse_inputs_results
-    @data.each_with_index do |d, i|
-      @input_strings[i] = formatted_input(d)
-      if !@valid_inputs.include?(i)
-        @output_strings[i] = 'Invalid Address'
-      end
-    end
-
-    @results.each do |r|
-      index = r['input_index']
-      @output_strings[index] = formatted_output(r)
-    end
+  def add_formatted_output(input, key, result_str = '')
+    base = "#{input[:street]}, #{input[:city]}, #{input[:zip_code]}"
+    outputs = {
+      'invalid' => base + ' -> Invalid Address',
+      0 => base + ' -> ' + result_str,
+      'blank' => ' ' * base.length + ' -> ' + result_str
+    }
+    outputs.fetch(key, outputs['blank'])
   end
   
-  def formatted_input(data)
-    input_str = "#{data[:street]}, #{data[:city]}, #{data[:zip_code]} -> "
-  end
-
-  def formatted_output(result)
-    output_str = "#{result["delivery_line_1"]}, #{result['components']['city_name']}, #{result['components']['zipcode']}-#{result['components']['plus4_code']}"
-  end
-
-  def valid_inputs
-    valid = []
+  def clean_results
+    clean = {}
     @results.each do |result|
-      valid << result['input_index']
+      input_index = result['input_index']
+      result_str = result_output_string(result)
+      if !clean.has_key?(input_index)
+        clean[input_index] = [result_str]
+      else
+        clean[input_index] << result_str
+      end
     end
-    valid
+    clean
+  end
+
+  def result_output_string(result)
+    c = result['components']
+    "#{result["delivery_line_1"]}, #{c['city_name']}, #{c['zipcode']}-#{c['plus4_code']}"
   end
 end
