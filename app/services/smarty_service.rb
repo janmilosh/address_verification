@@ -3,13 +3,13 @@ require 'smartystreets_ruby_sdk/static_credentials'
 require 'smartystreets_ruby_sdk/client_builder'
 
 class SmartyService
-  def initialize(batch)
-    @batch = batch
+  def initialize(lookup)
+    @lookup = lookup
   end
 
-  def get_matches
+  def get_match
     begin
-      client.send_batch(@batch)
+      client.send_lookup(@lookup)
     rescue SmartyStreets::SmartyError => err
       puts err
       return

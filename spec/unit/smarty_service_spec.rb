@@ -1,12 +1,11 @@
 require_relative '../../app/services/smarty_service.rb'
 require_relative '../../app/lib/smarty_helper.rb'
 require_relative '../../app/lib/csv_parser.rb'
-require_relative '../results_data/test_2_line_results.rb'
 
 describe 'SmartyService' do
-  subject { SmartyService.new(batch) }
-  let(:batch) { SmartyHelper.new(data) }
-  let(:data) { CSVParser.new(:file) }
+  subject { SmartyService.new(lookup) }
+  let(:lookup) { SmartyHelper.new(address) }
+  let(:address) { CSVParser.new(file).table.first }
   let(:file) { "#{ __dir__ }/../../app/data/test_2_line.csv" }
 
   describe '#initialize' do

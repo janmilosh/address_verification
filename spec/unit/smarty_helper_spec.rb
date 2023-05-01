@@ -3,9 +3,8 @@ require_relative '../../app/lib/csv_parser.rb'
 
 describe SmartyHelper do
   let(:file) { "#{ __dir__ }/../../app/data/test_2_line.csv" }
-  let(:data) { CSVParser.new(file).table }
-  let(:num_candidates) { 5 }
-  subject { SmartyHelper.new(data, num_candidates) }
+  let(:address) { CSVParser.new(file).table.first }
+  subject { SmartyHelper.new(address) }
 
   describe '#initialize' do
     it 'creates a SmartyHelper instance' do
@@ -13,19 +12,16 @@ describe SmartyHelper do
     end
   end
 
-  describe '#batch' do
-    let(:batch) { subject.batch }
-    it 'creates a SmartyStreets::Batch instance' do
-      expect(batch).to be_an_instance_of(SmartyStreets::Batch)
-    end
-
-    it 'contains two elements' do
-      expect(batch.size).to eq 2
+  describe '#lookup' do
+    let(:lookup) { subject.lookup }
+    it 'creates a SmartyStreets::Lookup instance' do
+      expect(lookup).to be_an_instance_of(SmartyStreets::USStreet::Lookup)
     end
 
     it 'contains the correct data' do
-      expect(batch[0].city).to eq 'Columbus'
-      expect(batch[1].zipcode).to eq '11111'
+      expect(lookup.street).to eq '143 e Maine Street'
+      expect(lookup.city).to eq 'Columbus'
+      expect(lookup.zipcode).to eq '43215'
     end
   end
 end

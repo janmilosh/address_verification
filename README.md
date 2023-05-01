@@ -38,17 +38,6 @@ This will output:
 143 e Maine Street, Columbus, 43215 -> 143 E Main St, Columbus, 43215-5370
 1 Empora St, Title, 11111 -> Invalid Address
 ```
-If you wish to return multiple candidates, add the number after your csv file name:
-```
-$ ruby verify.rb multiple_candidates.csv 3
-```
-In this case there are two candidates returned for the first address:
-```
-1 Rosedale, Baltimore, 21229 -> 1 N Rosedale St, Baltimore, 21229-3737
-                             -> 1 S Rosedale St, Baltimore, 21229-3739
-11 bad street, youngstown, 12121 -> Invalid Address
-143 e Maine Street, Columbus, 43215 -> 143 E Main St, Columbus, 43215-5370
-```
 
 ## Project structure
 
